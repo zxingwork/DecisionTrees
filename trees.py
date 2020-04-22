@@ -16,7 +16,26 @@ def clcShannonEnt(dataset):
         labelCount[currentLabel] += 1
     shannonEnt = 0.0
     for key in labelCount:
-        prob = float(currentLabel[key]) / numEntries
+        prob = float(labelCount[key]) / numEntries
         shannonEnt -= prob * np.log2(prob)
     return shannonEnt
 
+
+def createDataSet():
+    dataSet = np.array([[1, 1, 'yes'],
+                        [1, 1, 'yes'],
+                        [1, 0, 'no'],
+                        [0, 1, 'no'],
+                        [0, 1, 'no']])
+    labels = ['no surfacing', 'flippers']
+    return dataSet, labels
+
+
+def splitDataSet(dataSet, axis, value):
+    retDataSet = []
+    for featVec in dataSet:
+        if featVec[axis] == value:
+            reduceFeatVec = featVec[:axis]
+            reduceFeatVec.extend(featVec[axis+1:])
+            retDataSet.append(reduceFeatVec)
+    return retDataSet
